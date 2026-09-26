@@ -28,7 +28,7 @@
 </head>
 <body>
 <main class="forest" aria-label="The Forest">
-<img class="forest-bg" src="assets/forest-bg.png" alt="Pixel-art forest with a wolf and Buster">
+<img class="forest-bg" src="forest-bg.png" alt="Pixel-art forest with a wolf and Buster">
 <div class="wind" aria-hidden="true">
 <i class="leaf" style="--y:18%;--s:8px;--d:5.2s"></i><i class="leaf" style="--y:29%;--s:-5px;--d:6.8s"></i><i class="leaf" style="--y:43%;--s:7px;--d:5.9s"></i><i class="leaf" style="--y:57%;--s:-6px;--d:7.1s"></i><i class="leaf" style="--y:71%;--s:5px;--d:6.2s"></i><i class="leaf" style="--y:82%;--s:-4px;--d:7.5s"></i>
 </div>
@@ -46,8 +46,8 @@
 </main>
 <script>
 (()=>{
- const busterAudio=new Audio('assets/buster.mp3'); busterAudio.preload='auto';
- const wolfAudio=new Audio('assets/wolf.mp4'); wolfAudio.preload='auto';
+ const busterAudio=new Audio('buster.mp3'); busterAudio.preload='auto';
+ const wolfAudio=new Audio('wolf.mp4'); wolfAudio.preload='auto';
  const stateKey='oul-forest-secrets';
  function tellParent(type, extra={}){ try{ if(window.parent && window.parent!==window) window.parent.postMessage({type,...extra}, '*'); }catch(_){} }
  // Forest progress is intentionally session-only: every new visit starts fresh.

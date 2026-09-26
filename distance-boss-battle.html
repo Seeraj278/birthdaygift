@@ -76,8 +76,8 @@ font:clamp(12px,1.15vw,18px) Georgia,serif;background:rgba(16,9,19,.52);padding:
 <div id="barWrap"><div id="bar"></div></div>
 <div id="name">THE DISTANCE</div>
 <div id="hint">Click the boss to attack</div>
-<div id="rewardScreen" role="dialog" aria-modal="true" aria-labelledby="rewardTitle"><div class="reward-card"><h1 id="rewardTitle">Congratulations for defeating the boss!</h1><p id="rewardPrompt">Click to open your reward</p><button id="rewardGift" type="button" aria-label="Open your reward"><img id="rewardIcon" src="assets/boss-reward.png" alt="">OPEN REWARD</button></div></div>
-<div id="letterScreen" role="dialog" aria-modal="true" aria-label="Your birthday letter"><button id="letterClose" type="button" aria-label="Close letter">×</button><img id="letterImage" src="assets/boss-letter.png" alt="A birthday letter from Seeraj"></div>
+<div id="rewardScreen" role="dialog" aria-modal="true" aria-labelledby="rewardTitle"><div class="reward-card"><h1 id="rewardTitle">Congratulations for defeating the boss!</h1><p id="rewardPrompt">Click to open your reward</p><button id="rewardGift" type="button" aria-label="Open your reward"><img id="rewardIcon" src="boss-reward.png" alt="">OPEN REWARD</button></div></div>
+<div id="letterScreen" role="dialog" aria-modal="true" aria-label="Your birthday letter"><button id="letterClose" type="button" aria-label="Close letter">×</button><img id="letterImage" src="boss-letter.png" alt="A birthday letter from Seeraj"></div>
 </div>
 
 <script>
@@ -88,7 +88,7 @@ const flash=document.getElementById('damageFlash');
 const hint=document.getElementById('hint');
 const rewardScreen=document.getElementById('rewardScreen');
 const letterScreen=document.getElementById('letterScreen');
-const letterOpenSound=new Audio('assets/letter-open-sound.mp3');
+const letterOpenSound=new Audio('letter-open-sound.mp3');
 letterOpenSound.preload='auto';
 letterOpenSound.volume=0.8;
 document.getElementById('rewardGift').addEventListener('click',()=>{
@@ -105,7 +105,7 @@ document.getElementById('letterClose').addEventListener('click',()=>{
  document.getElementById('rewardGift').focus();
 });
 const hitSounds=Array.from({length:4},()=>{
- const sound=new Audio('assets/boss-hit.mp3');
+ const sound=new Audio('boss-hit.mp3');
  sound.preload='auto';
  sound.volume=0.7;
  return sound;
