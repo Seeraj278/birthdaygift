@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Our Little Adventure — The Forest</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+:root{--cream:#fff0c9;--gold:#efb64f;--panel:rgba(20,27,39,.86)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#14251b;color:var(--cream)}body{font-family:'VT323',monospace}
+.forest{position:relative;width:100vw;height:100vh;overflow:hidden;background:#14251b}
+.forest-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;z-index:1}
+.wind{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.leaf{position:absolute;left:-30px;top:var(--y);width:7px;height:3px;background:#b8c95c;opacity:0;image-rendering:pixelated;animation:gust var(--d) linear infinite}
+.leaf:nth-child(2n){width:5px;height:2px;background:#d7df82}
+@keyframes gust{0%{transform:translate3d(-30px,0,0) rotate(8deg);opacity:0}12%{opacity:.55}50%{transform:translate3d(50vw,var(--s),0) rotate(24deg);opacity:.48}100%{transform:translate3d(110vw,calc(var(--s) * -1),0) rotate(42deg);opacity:0}}
+.top{position:absolute;z-index:50;top:16px;left:5%;right:5%;display:flex;justify-content:space-between;align-items:center}
+.badge,.btn{font-family:'Press Start 2P',monospace;color:var(--cream);background:#241c2c;border:3px solid var(--gold);box-shadow:5px 5px 0 #24141d;cursor:pointer}.badge{padding:10px 14px;font-size:12px}.btn{padding:13px 18px;font-size:11px}.mini-player-icon{width:34px!important;height:34px!important;max-width:34px!important;max-height:34px!important;min-width:34px!important;min-height:34px!important;object-fit:contain!important;display:block!important;image-rendering:pixelated!important;background:transparent!important;border:0!important;box-shadow:none!important}.player-badge{display:flex;align-items:center;gap:8px;line-height:1}.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.panel{position:absolute;z-index:20;left:50%;top:7%;transform:translateX(-50%);width:min(620px,62vw);padding:18px 24px;text-align:center;background:var(--panel);border:3px solid var(--gold);box-shadow:7px 7px 0 rgba(38,25,33,.78)}.panel h1{font-family:'Press Start 2P';font-size:20px;margin:0 0 12px}.panel p{font-size:18px;margin:0 0 16px}
+.hit{position:absolute;z-index:25;border:0;background:transparent;border-radius:50%;cursor:pointer;min-width:52px;min-height:52px}.hit:hover{filter:drop-shadow(0 0 10px rgba(255,224,130,.45))}.buster-hit{left:5%;bottom:23%;width:22%;height:28%}.wolf-hit{right:7%;top:22%;width:16%;height:22%}
+.reaction{position:absolute;z-index:28;pointer-events:none;font-family:'Press Start 2P';font-size:20px;font-weight:800;text-shadow:3px 3px #17213b;opacity:0;white-space:nowrap}.buster-word{left:12%;bottom:43%;color:#9fd8ff}.awoo{right:11%;top:17%;color:#ffe58a}.reaction.show{animation:pop 900ms ease-out}
+.complete-badge{position:absolute;z-index:40;width:44px;height:44px;display:none;place-items:center;border:3px solid #f7c95c;border-radius:50%;background:#17351f;color:#8cff9a;font:900 28px/1 Arial,sans-serif;box-shadow:4px 4px 0 #241b24,0 0 14px rgba(140,255,154,.45);pointer-events:none}.complete-badge.show{display:grid}.buster-complete{left:25%;bottom:28%}.wolf-complete{right:22%;top:18%}
+.return-world{position:absolute;z-index:50;left:50%;bottom:22px;transform:translateX(-50%)}
+.complete-note{position:absolute;z-index:30;left:50%;top:calc(7% + 98px);transform:translateX(-50%);display:none;padding:8px 14px;background:rgba(23,53,31,.94);border:2px solid #8cff9a;color:#8cff9a;font-family:'Press Start 2P';font-size:10px;box-shadow:4px 4px 0 #241b24}.complete-note.show{display:block}@keyframes pop{0%{opacity:0;transform:translateY(10px) scale(.75)}18%{opacity:1;transform:translateY(0) scale(1.05)}70%{opacity:1;transform:translateY(-18px) scale(1)}100%{opacity:0;transform:translateY(-30px) scale(.96)}}
+.forest-player-modal{position:absolute;inset:0;z-index:100;display:grid;place-items:center;background:rgba(8,10,15,.62);padding:24px}.forest-player-modal[hidden]{display:none}.forest-player-card{width:min(280px,72vw)!important;max-width:280px!important;max-height:76vh!important;padding:14px 16px 16px;text-align:center;background:rgba(29,23,39,.97);border:3px solid var(--gold);box-shadow:8px 8px 0 rgba(26,14,20,.82);overflow:hidden}.forest-player-title{font-family:'Press Start 2P';font-size:14px;margin:0 0 8px;text-shadow:3px 3px #4c2b3a}.forest-player-card img#forestPlayerDisplay{display:block!important;width:160px!important;height:190px!important;max-width:160px!important;max-height:190px!important;min-width:0!important;min-height:0!important;object-fit:contain!important;object-position:center!important;margin:0 auto 12px!important;padding:0!important;image-rendering:pixelated;background:transparent}
+@media(max-width:700px){.panel{width:88vw;top:10%}.panel h1{font-size:15px}.panel p{font-size:16px}.badge{font-size:9px}.btn{font-size:9px}}
+</style>
+</head>
+<body>
+<main class="forest" aria-label="The Forest">
+<img class="forest-bg" src="assets/forest-bg.png" alt="Pixel-art forest with a wolf and Buster">
+<div class="wind" aria-hidden="true">
+<i class="leaf" style="--y:18%;--s:8px;--d:5.2s"></i><i class="leaf" style="--y:29%;--s:-5px;--d:6.8s"></i><i class="leaf" style="--y:43%;--s:7px;--d:5.9s"></i><i class="leaf" style="--y:57%;--s:-6px;--d:7.1s"></i><i class="leaf" style="--y:71%;--s:5px;--d:6.2s"></i><i class="leaf" style="--y:82%;--s:-4px;--d:7.5s"></i>
+</div>
+<div class="top"><button class="badge btn player-badge" id="forestPlayer"><img id="forestPlayerIcon" class="mini-player-icon" src="assets/characters/princess_brown_blue_none.png" alt=""><span>PLAYER 2</span></button></div>
+<div class="panel"><h1>THE FOREST DISCOVERED</h1><p>Find the two secrets hidden within the forest</p></div>
+<button class="hit buster-hit" id="buster" aria-label="Buster"></button>
+<button class="hit wolf-hit" id="wolf" aria-label="Wolf"></button>
+<div class="reaction buster-word" id="busterWord">BUSTER!</div>
+<div class="reaction awoo" id="awoo">AWOOO!</div>
+<div class="complete-badge buster-complete" id="busterComplete">✓</div>
+<div class="complete-badge wolf-complete" id="wolfComplete">✓</div>
+<div class="complete-note" id="completeNote">FOREST COMPLETE!</div>
+<div class="forest-player-modal" id="forestPlayerModal" hidden><div class="forest-player-card"><div class="forest-player-title">PLAYER 2</div><img id="forestPlayerDisplay" src="assets/characters/princess_brown_blue_none.png" alt="Player 2 character"><button class="btn" id="forestPlayerBack">↩ BACK</button></div></div>
+<div class="return-world"><button class="btn" id="world">↩ RETURN TO WORLD</button></div>
+</main>
+<script>
+(()=>{
+ const busterAudio=new Audio('assets/buster.mp3'); busterAudio.preload='auto';
+ const wolfAudio=new Audio('assets/wolf.mp4'); wolfAudio.preload='auto';
+ const stateKey='oul-forest-secrets';
+ function tellParent(type, extra={}){ try{ if(window.parent && window.parent!==window) window.parent.postMessage({type,...extra}, '*'); }catch(_){} }
+ // Forest progress is intentionally session-only: every new visit starts fresh.
+ let state={buster:false,wolf:false};
+ try{ localStorage.removeItem(stateKey); }catch(_){}
+ const busterBtn=document.getElementById('buster'), wolfBtn=document.getElementById('wolf');
+ const busterWord=document.getElementById('busterWord'), awoo=document.getElementById('awoo');
+ const busterComplete=document.getElementById('busterComplete'), wolfComplete=document.getElementById('wolfComplete');
+ const completeNote=document.getElementById('completeNote');
+ function react(el){el.classList.remove('show');void el.offsetWidth;el.classList.add('show');}
+ function save(){ update(); }
+ function update(){
+   busterComplete.classList.toggle('show',!!state.buster);
+   wolfComplete.classList.toggle('show',!!state.wolf);
+   completeNote.classList.toggle('show',!!state.buster&&!!state.wolf);
+   if(state.buster&&state.wolf){
+     try{
+       const visited=new Set(JSON.parse(localStorage.getItem('oul-visited')||'[]'));
+       visited.add('forest'); localStorage.setItem('oul-visited',JSON.stringify([...visited]));
+       const c=JSON.parse(localStorage.getItem('our-little-adventure-checkpoints')||'{}'); c.forest=true; localStorage.setItem('our-little-adventure-checkpoints',JSON.stringify(c));
+     }catch(_){}
+   }
+ }
+ function playAndComplete(audio,key){
+   try{
+     tellParent('forest-secret-start',{key});
+     audio.pause(); audio.currentTime=0;
+     audio.onended=()=>{ tellParent('forest-secret-end',{key}); audio.onended=null; };
+     const p=audio.play();
+     if(p&&typeof p.then==='function'){ p.then(()=>{state[key]=true;save(); if(state.buster&&state.wolf) tellParent('forest-complete');}).catch(()=>{ tellParent('forest-secret-end',{key}); }); }
+     else { setTimeout(()=>{state[key]=true;save(); if(state.buster&&state.wolf) tellParent('forest-complete');},100); }
+   }catch(_){ tellParent('forest-secret-end',{key}); }
+ }
+ busterBtn.addEventListener('click',()=>{react(busterWord);playAndComplete(busterAudio,'buster');});
+ wolfBtn.addEventListener('click',()=>{react(awoo);playAndComplete(wolfAudio,'wolf');});
+   const forestPlayer=document.getElementById('forestPlayer');
+  const forestPlayerIcon=document.getElementById('forestPlayerIcon');
+  const forestPlayerModal=document.getElementById('forestPlayerModal');
+  const forestPlayerDisplay=document.getElementById('forestPlayerDisplay');
+  const forestPlayerBack=document.getElementById('forestPlayerBack');
+  function syncForestPlayer(){
+    let saved={}; try{saved=JSON.parse(sessionStorage.getItem('oul-character')||'{}')}catch(_){}
+    const hair=['brown','black','blonde','red'].includes(saved.hair)?saved.hair:'brown';
+    const outfit=['blue','red','green','purple','white','black'].includes(saved.outfit)?saved.outfit:'blue';
+    const accessory=['none','crown','flower'].includes(saved.accessory)?saved.accessory:'none';
+    const src=`assets/characters/princess_${hair}_${outfit}_${accessory}.png`;
+    if(forestPlayerIcon) forestPlayerIcon.src=src;
+    if(forestPlayerDisplay) forestPlayerDisplay.src=src;
+  }
+  syncForestPlayer();
+  forestPlayer?.addEventListener('click',()=>{syncForestPlayer();if(forestPlayerModal)forestPlayerModal.hidden=false;});
+  forestPlayerBack?.addEventListener('click',()=>{if(forestPlayerModal)forestPlayerModal.hidden=true;});
+document.getElementById('world').addEventListener('click',()=>{
+   busterAudio.pause(); wolfAudio.pause();
+   busterAudio.currentTime=0; wolfAudio.currentTime=0;
+   try{ localStorage.removeItem(stateKey); }catch(_){}
+   if(window.parent && window.parent!==window) tellParent('forest-return');
+   else window.location.href='index.html#map';
+ });
+ window.addEventListener('pagehide',()=>{try{busterAudio.pause();wolfAudio.pause();}catch(_){} tellParent('forest-pagehide'); });
+ update();
+})();
+</script>
+</body>
+</html>
